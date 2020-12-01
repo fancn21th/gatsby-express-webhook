@@ -3,6 +3,7 @@ const path = require("path");
 const createPackLog = require("./log");
 
 function createPackPromise() {
+  global.packInProcess = true;
   return new Promise((resolve, reject) => {
     const sh = execFile(
       "npm",
@@ -19,6 +20,9 @@ function createPackPromise() {
         resolve(true);
       }
     );
+    sh.on("close", () => {
+      global.packInProcess = false;
+    });
   })
     .catch((error) => {
       throw new Error(error);
