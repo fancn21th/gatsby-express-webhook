@@ -2,6 +2,8 @@ const express = require("express");
 // Set up the express app
 const app = express();
 const pack = require("./pack");
+const PORT = 3000;
+
 app.post("/api/gatsbyBuild", async (req, res) => {
   if (global.packInProcess) {
     res.status(403).send({
@@ -16,8 +18,6 @@ app.post("/api/gatsbyBuild", async (req, res) => {
     success: result ? true : false,
   });
 });
-
-const PORT = 3000;
 
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
